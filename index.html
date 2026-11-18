@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polivalencias Latam</title>
+<style>
+:root{--bg:#FBF6EC;--fg:#1B2A41;--ac:#1F3A5F;--wine:#7B2D43;--lil:#8E7CC3;--card:#fff;--line:#e4d9c6;--mut:#5b6678;--bdg:#6B58A8;--bdt:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121826;--fg:#EFE9DD;--ac:#9DB8E6;--wine:#E39AB0;--lil:#B7A9E3;--card:#1B2438;--line:#2d3a55;--mut:#aab4c6;--bdg:#B7A9E3;--bdt:#121826}}
+:root[data-theme="dark"]{--bg:#121826;--fg:#EFE9DD;--ac:#9DB8E6;--wine:#E39AB0;--lil:#B7A9E3;--card:#1B2438;--line:#2d3a55;--mut:#aab4c6;--bdg:#B7A9E3;--bdt:#121826}
+*,*:before,*:after{box-sizing:border-box}
+html{scroll-padding-top:calc(70px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+html.big{font-size:125%}body{margin:0;background:var(--bg);color:var(--fg);font:1.125rem/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.brand{font-family:Georgia,"Times New Roman",serif;color:var(--ac);line-height:1.2}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding:10px 20px}
+.brand{font-size:1.3rem;font-weight:700}
+nav{display:flex;flex-wrap:wrap;gap:4px 14px}
+nav a{color:var(--fg);text-decoration:none;padding:4px 2px}
+nav a:hover{color:var(--wine);text-decoration:underline}
+.tools{display:flex;gap:6px;align-items:center}
+button,.btn{font:inherit;cursor:pointer;border-radius:12px;border:2px solid var(--ac);background:var(--ac);color:var(--bg);padding:10px 18px;min-height:44px}
+button.alt{background:transparent;color:var(--ac)}
+button.sm{padding:4px 10px;min-height:36px;font-size:.9rem}
+button[aria-pressed=true]{background:var(--wine);border-color:var(--wine);color:#fff}
+button:disabled{opacity:.55;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--lil);outline-offset:2px}
+main{max-width:1050px;margin:0 auto;padding:0 20px}
+.hero{padding:56px 0 36px;text-align:center}
+.hero h1{font-size:clamp(2.2rem,6vw,3.6rem);margin:0}
+.tag{font-family:Georgia,serif;font-style:italic;color:var(--wine);font-size:1.4rem;margin:.3em 0}
+.hero p{max-width:640px;margin:0 auto 20px;color:var(--mut)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+section{padding:28px 0}
+h2{font-size:1.9rem;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.card h3{margin:0;font-size:1.3rem}
+.badge{align-self:flex-start;background:var(--bdg);color:var(--bdt);border-radius:99px;padding:2px 12px;font-size:.85rem}
+.badge.pre{background:var(--wine);color:var(--bdt)}
+.price{font-weight:700;color:var(--wine)}
+.mut{color:var(--mut);font-size:.95rem}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.note{border-left:4px solid var(--lil);background:var(--card);padding:12px 16px;border-radius:0 12px 12px 0;margin:12px 0}
+dialog{max-width:min(620px,94vw);border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--fg);padding:22px}
+dialog::backdrop{background:rgba(10,15,30,.5)}
+.frag{font-family:Georgia,serif;font-style:italic;white-space:pre-line}
+.tc-item{display:block;margin:8px 0;font-size:.98rem}
+.tc-item input{width:20px;height:20px;vertical-align:-4px;margin-right:6px}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 20px 90px;text-align:center;color:var(--mut);font-size:.9rem}
+#ast{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6}
+#panel{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100vw - 32px));height:min(520px,70vh);background:var(--card);border:1px solid var(--line);border-radius:18px;display:none;flex-direction:column;z-index:6;overflow:hidden}
+#panel.open{display:flex}
+#msgs{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.m{padding:8px 12px;border-radius:14px;max-width:88%;font-size:.95rem;white-space:pre-wrap}
+.m.a{background:var(--bg);align-self:flex-start}
+.m.u{background:var(--ac);color:var(--bg);align-self:flex-end}
+#f{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#f input{flex:1;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);min-width:0}
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">Polivalencias Latam</span>
+  <nav id="nav"></nav>
+  <div class="tools">
+    <button class="alt sm" data-l="es" aria-pressed="true">ES</button><button class="alt sm" data-l="en">EN</button><button class="alt sm" data-l="pt">PT</button>
+    <button id="zoom" class="alt sm" aria-pressed="false" aria-label="Texto más grande">A+</button><button id="cartb" class="sm"></button>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <h1>Polivalencias Latam</h1>
+    <p class="tag">Observo. Construyo sentido. Trasciendo.</p>
+    <p id="sub"></p>
+    <div class="cta"><a class="btn" href="#libros" id="c1"></a><a class="btn alt" style="background:transparent;color:var(--ac);text-decoration:none" href="#servicios" id="c2"></a><button class="alt" id="c3"></button></div>
+  </section>
+  <section id="libros"><h2 id="h-lib"></h2><div class="grid" id="prods"></div></section>
+  <section id="servicios"><h2 id="h-srv"></h2><div class="grid" id="srv"></div>
+    <div class="note" id="n1"></div><div class="note" id="n2"></div></section>
+  <section id="contacto"><h2 id="h-ct"></h2><p id="cts" class="mut"></p>
+    <form id="cf" class="card" style="max-width:560px"><label><span id="l-cn"></span><br><input id="cn" required maxlength="80" autocomplete="name" style="width:100%;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg)"></label>
+    <label><span id="l-ce"></span><br><input id="ce" type="email" required maxlength="120" autocomplete="email" style="width:100%;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg)"></label>
+    <label><span id="l-cm"></span><br><textarea id="cm" required rows="5" maxlength="1500" style="width:100%;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg)"></textarea></label>
+    <label><input type="checkbox" id="cc" required> <span id="l-cc"></span></label>
+    <p class="mut" id="cw"></p><div class="row"><button type="submit" id="cb"></button></div></form></section>
+</main>
+<footer id="foot"></footer>
+<dialog id="dlg"></dialog>
+<div id="ast"><button id="astb"></button></div>
+<div id="panel" role="dialog" aria-label="Asistente"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line)"><strong>IA · El Anfitrión del Umbral</strong><span><button class="alt sm" id="spk" aria-pressed="false" hidden>🔊</button> <button class="alt sm" id="pc" aria-label="Cerrar">✕</button></span></div><div id="msgs" aria-live="polite"></div>
+  <form id="f"><input id="inp" autocomplete="off"><button type="button" class="alt sm" id="mic" aria-pressed="false" hidden>🎤</button><button class="sm" id="send"></button></form></div>
+<script>
+const T={
+es:{ct:"Contacto",cts:"Escríbanos a polivalenciaslatam@proton.me o use este formulario.",cn:"Nombre",ce:"Tu correo",cm:"Mensaje",cc:"Autorizo el tratamiento de mis datos de contacto solo para responder este mensaje.",cw:"No escribas aquí datos clínicos ni relatos personales; eso se maneja después, con contrato.",cb:"Enviar por correo",phys2:"Físico (solo Colombia): próximamente",eta:"Entrega estimada: 12 de abril de 2027 (podría adelantarse)",dl:"Preventa hasta: 12 de abril de 2027 (podría cerrar antes)",lic:"Licencia anual: 148 EUR el primer año (10 €/mes meses 1-4 · 12 €/mes 5-8 · 15 €/mes desde 9). Renovación: 180 EUR/año",pb:"Preventa",by:"Autor",nav:["Libros y apps","Servicios","Consultorio","Contacto"],sub:"Un espacio para aprender, sanar, crear, investigar, emprender y trascender.",c1:"Explorar productos",c2:"Conocer servicios",c3:"Hablar con un asistente",hl:"Libros y aplicaciones",hs:"Servicios profesionales",
+buy:"Agregar al carrito",pre:"Reservar en preventa",frag:"Leer fragmento",cart:"Carrito",empty:"Tu carrito está vacío.",total:"Total",close:"Cerrar",
+paym:"Cómo pagar",pp:"PayPal (EUR): paypal.me/czqualitrans",nq:"Nequi / Bre-B (COP): coordinamos por correo",paypend:"El cobro en línea automático se activará pronto; hoy tu pedido queda registrado y coordinamos el pago por correo.",cord:"Coordinar compra por correo",
+buyq:"Solicitar licencia",
+tct:"Términos para QualiTrans IA",tc0:"Antes de continuar, lee y acepta los siguientes documentos:",tc1:"He leído, comprendo y acepto los Términos y Condiciones de Uso y la Política de Privacidad.",tc2:"Acepto de manera expresa, libre e informada el Pacto Arbitral (Cámara de Comercio de Montería, Córdoba, Colombia; idioma español), entendiendo que renuncio a resolver ciertas controversias ante la jurisdicción ordinaria.",tc3:"Confirmo que soy mayor de 18 años, o cuento con autorización de mi representante legal.",tc4:"Confirmo que soy responsable de la seguridad, cifrado, respaldo y protección de los datos almacenados en mi propio equipo.",tco1:"(Opcional) Acepto recibir sugerencias y notificaciones de mejora de QualiTrans IA.",tco2:"(Opcional, Ley 1581 de 2012) Autorizo conservar mis datos para informarme sobre futuros productos de Polivalencias Latam.",tcsend:"Aceptar y enviar solicitud",tcreq:"Debes marcar las 4 casillas obligatorias para continuar.",tcok:"Solicitud preparada. Se abrirá tu correo con la aceptación registrada; envíalo y coordinaremos el pago y la entrega de tu licencia.",
+fmt:"Digital (PDF y EPUB)",phys:"Físico (solo Colombia)",tbd:"Por confirmar",ask:"Preguntar al asistente",
+n1:"Atención psicológica presencial: únicamente en Montelíbano, Córdoba, Colombia. Atención remota: disponible para cualquier lugar, mediante Zoom, Google Meet o videollamada. La plataforma no sustituye la atención profesional.",
+n2:"Historias de vida: antes de firmar el contrato no se reciben relatos, grabaciones ni archivos; solo datos de contacto y consultas sobre el servicio.",
+foot:"Textos legales (privacidad, términos, cookies) pendientes de validación por un abogado. Precios base en euros; el equivalente en COP y USD se activará con la tasa configurada. Polivalencias Latam © 2026.",
+ast:"Hablar con un asistente",send:"Enviar",ph:"Escribe tu pregunta",greet:"Hola, soy el Anfitrión del Umbral, el asistente de Polivalencias Latam (una inteligencia artificial). ¿Prefieres chatear o conversar por voz? Puedes escribir, dictar con 🎤 o escuchar mis respuestas con 🔊 (depende de tu navegador). ¿En qué te ayudo?",noai:"El asistente no está disponible en este momento.",novoice:"No pude usar el micrófono. Revisa el permiso del navegador o escribe tu pregunta.",mic:"Dictar pregunta",prn:"edición impresa",v1:"El navegador o este entorno bloquea el micrófono. Puedes usar el dictado del teclado de tu celular.",v2:"No te escuché. Intenta de nuevo.",v3:"No encuentro un micrófono disponible.",v4:"No pude leer en voz alta en este navegador.",spk:"Leer respuestas en voz alta",
+prod:{h:["Helena","Cuenvela · Tercer lugar, I Certamen Internacional Literario de Cuenvelas","Ocho cuentos independientes, semblanzas de la vida de Helena, que se leen como una novela corta. Profundiza en el comportamiento, la idiosincrasia y el maltrato que sufren las mujeres de clase baja en el Caribe colombiano. Aborda pobreza, maltrato y violencia; recomendado para adultos."],
+m:["Miércoles","Cuenvela · Primer Premio, II Certamen Internacional Literario de Cuenvela (Ediciones Yunque, San Juan, Puerto Rico, 11 de enero de 2023)","Ocho cuentos, semblanzas de la vida de Marucha, sobre cómo las tragedias pueden dejarnos atrapados en un día. Aborda violencia armada y maltrato; recomendado para adultos. Libro en preventa: aún no se ha editado."],
+q:["QualiTrans IA","Aplicación · Licencia anual","Para investigación cualitativa, investigación social y trabajo profesional. Primera licencia anual: 148 EUR (rampa 10→12→15 €/mes); renovación 180 EUR/año."],
+c:["Comida Sana Doña Helena","Aplicación · Próximamente","Alimentación familiar, economía doméstica, cocina y emprendimiento gastronómico. Lista de espera en preparación."]},
+svc:["Consultorio psicológico","Historias de vida","Asesorías pedagógicas","Investigación cualitativa","Investigación de mercados","Planes de negocio","Gestión de proyectos"]},
+en:{ct:"Contact",cts:"Write to polivalenciaslatam@proton.me or use this form.",cn:"Name",ce:"Your email",cm:"Message",cc:"I authorize the use of my contact data only to answer this message.",cw:"Do not write clinical data or personal stories here; those are handled later, under contract.",cb:"Send by email",phys2:"Print (Colombia only): coming soon",eta:"Estimated delivery: April 12, 2027 (may be earlier)",dl:"Pre-order until: April 12, 2027 (may close earlier)",lic:"Annual license: 148 EUR first year (10 €/mo months 1-4 · 12 €/mo 5-8 · 15 €/mo from 9). Renewal: 180 EUR/year",pb:"Pre-order",by:"Author",nav:["Books & apps","Services","Clinic","Contact"],sub:"A space to learn, heal, create, research, start businesses and transcend.",c1:"Explore products",c2:"See services",c3:"Talk to an assistant",hl:"Books and apps",hs:"Professional services",
+buy:"Add to cart",pre:"Pre-order",frag:"Read excerpt",cart:"Cart",empty:"Your cart is empty.",total:"Total",close:"Close",
+paym:"How to pay",pp:"PayPal (EUR): paypal.me/czqualitrans",nq:"Nequi / Bre-B (COP): we coordinate by email",paypend:"Automatic online checkout will be enabled soon; for now your order is registered and we coordinate payment by email.",cord:"Coordinate purchase by email",
+buyq:"Request license",
+tct:"Terms for QualiTrans IA",tc0:"Before continuing, please read and accept:",tc1:"I have read, understood and accept the Terms of Use and the Privacy Policy.",tc2:"I expressly, freely and informedly accept the Arbitration Agreement (Chamber of Commerce of Montería, Córdoba, Colombia; Spanish language), understanding that I waive certain disputes before ordinary courts.",tc3:"I confirm I am over 18, or that I have authorization from my legal representative.",tc4:"I confirm I am responsible for the security, encryption, backup and protection of data stored on my own device.",tco1:"(Optional) I agree to receive suggestions and improvement notifications about QualiTrans IA.",tco2:"(Optional, Law 1581 of 2012) I authorize keeping my data to inform me about future Polivalencias Latam products.",tcsend:"Accept and send request",tcreq:"You must check all 4 required boxes to continue.",tcok:"Request prepared. Your email app will open with the acceptance recorded; send it and we will coordinate payment and delivery of your license.",
+fmt:"Digital (PDF and EPUB)",phys:"Print (Colombia only)",tbd:"To be confirmed",ask:"Ask the assistant",
+n1:"In-person psychological care: only in Montelíbano, Córdoba, Colombia. Remote care: available anywhere via Zoom, Google Meet or video call. This platform does not replace professional care.",
+n2:"Life stories: before the contract is signed, no stories, recordings or files are received; only contact details and questions about the service.",
+foot:"Legal texts (privacy, terms, cookies) pending lawyer review. Base prices in euros; COP and USD equivalents will be enabled with the configured rate. Polivalencias Latam © 2026.",
+ast:"Talk to an assistant",send:"Send",ph:"Type your question",greet:"Hello, I am El Anfitrión del Umbral, the Polivalencias Latam assistant (an AI). Would you rather chat or talk by voice? You can type, dictate with 🎤 or hear my answers with 🔊 (depends on your browser). How can I help?",noai:"The assistant is not available right now.",novoice:"I could not use the microphone. Check the browser permission or type your question.",mic:"Dictate question",prn:"print edition",v1:"The browser or this environment blocks the microphone. You can use your phone keyboard dictation.",v2:"I did not hear you. Please try again.",v3:"No microphone found.",v4:"I could not read aloud in this browser.",spk:"Read answers aloud",
+prod:{h:["Helena","Cuenvela · Third place, I International Cuenvela Literary Contest","Eight independent stories portraying Helena's life, reading like a short novel. It explores the behavior, idiosyncrasy and mistreatment of lower-class women in Colombia's Caribbean region. Deals with poverty, abuse and violence; recommended for adults."],
+m:["Miércoles","Cuenvela · First Prize, II International Cuenvela Literary Contest (Ediciones Yunque, San Juan, Puerto Rico, January 11, 2023)","Eight stories portraying Marucha's life, about how tragedies can trap us in one day. Deals with armed violence and abuse; recommended for adults. Pre-order: the book is not yet published."],
+q:["QualiTrans IA","App · Annual license","For qualitative research, social research and professional work. First annual license: 148 EUR (10→12→15 €/mo ramp); renewal 180 EUR/year."],
+c:["Comida Sana Doña Helena","App · Coming soon","Family nutrition, household economy, cooking and food entrepreneurship. Waiting list in preparation."]},
+svc:["Psychology clinic","Life stories","Pedagogical advice","Qualitative research","Market research","Business plans","Project management"]},
+pt:{ct:"Contato",cts:"Escreva para polivalenciaslatam@proton.me ou use este formulário.",cn:"Nome",ce:"Seu e-mail",cm:"Mensagem",cc:"Autorizo o uso dos meus dados de contato somente para responder a esta mensagem.",cw:"Não escreva aqui dados clínicos nem relatos pessoais; isso é tratado depois, com contrato.",cb:"Enviar por e-mail",phys2:"Físico (somente Colômbia): em breve",eta:"Entrega estimada: 12 de abril de 2027 (pode ser antes)",dl:"Pré-venda até: 12 de abril de 2027 (pode encerrar antes)",lic:"Licença anual: 148 EUR no primeiro ano (10 €/mês meses 1-4 · 12 €/mês 5-8 · 15 €/mês desde 9). Renovação: 180 EUR/ano",pb:"Pré-venda",by:"Autor",nav:["Livros e apps","Serviços","Consultório","Contato"],sub:"Um espaço para aprender, curar, criar, pesquisar, empreender e transcender.",c1:"Explorar produtos",c2:"Conhecer serviços",c3:"Falar com um assistente",hl:"Livros e aplicativos",hs:"Serviços profissionais",
+buy:"Adicionar ao carrinho",pre:"Reservar em pré-venda",frag:"Ler trecho",cart:"Carrinho",empty:"Seu carrinho está vazio.",total:"Total",close:"Fechar",
+paym:"Como pagar",pp:"PayPal (EUR): paypal.me/czqualitrans",nq:"Nequi / Bre-B (COP): coordenamos por e-mail",paypend:"O pagamento online automático será ativado em breve; por enquanto seu pedido fica registrado e coordenamos o pagamento por e-mail.",cord:"Coordenar compra por e-mail",
+buyq:"Solicitar licença",
+tct:"Termos para QualiTrans IA",tc0:"Antes de continuar, leia e aceite os seguintes documentos:",tc1:"Li, compreendi e aceito os Termos de Uso e a Política de Privacidade.",tc2:"Aceito de forma expressa, livre e informada o Pacto Arbitral (Câmara de Comércio de Montería, Córdoba, Colômbia; idioma espanhol), entendendo que renuncio a certas controvérsias perante a jurisdição ordinária.",tc3:"Confirmo que sou maior de 18 anos, ou que conto com autorização do meu representante legal.",tc4:"Confirmo que sou responsável pela segurança, criptografia, backup e proteção dos dados armazenados no meu próprio dispositivo.",tco1:"(Opcional) Aceito receber sugestões e notificações de melhoria do QualiTrans IA.",tco2:"(Opcional, Lei 1581 de 2012) Autorizo a conservação dos meus dados para me informar sobre futuros produtos da Polivalencias Latam.",tcsend:"Aceitar e enviar solicitação",tcreq:"Você deve marcar as 4 caixas obrigatórias para continuar.",tcok:"Solicitação preparada. Seu aplicativo de e-mail abrirá com a aceitação registrada; envie e coordenaremos o pagamento e a entrega da sua licença.",
+fmt:"Digital (PDF e EPUB)",phys:"Físico (somente Colômbia)",tbd:"A confirmar",ask:"Perguntar ao assistente",
+n1:"Atendimento psicológico presencial: somente em Montelíbano, Córdoba, Colômbia. Atendimento remoto: disponível de qualquer lugar, por Zoom, Google Meet ou videochamada. A plataforma não substitui o atendimento profissional.",
+n2:"Histórias de vida: antes da assinatura do contrato não são recebidos relatos, gravações nem arquivos; apenas dados de contato e dúvidas sobre o serviço.",
+foot:"Textos legais (privacidade, termos, cookies) pendentes de validação por um advogado. Preços base em euros; os equivalentes em COP e USD serão ativados com a taxa configurada. Polivalencias Latam © 2026.",
+ast:"Falar com um assistente",send:"Enviar",ph:"Escreva sua pergunta",greet:"Olá, sou o Anfitrião do Umbral, o assistente da Polivalencias Latam (uma inteligência artificial). Prefere conversar por chat ou por voz? Você pode escrever, ditar com 🎤 ou ouvir minhas respostas com 🔊 (depende do navegador). Como posso ajudar?",noai:"O assistente não está disponível no momento.",novoice:"Não consegui usar o microfone. Verifique a permissão do navegador ou escreva sua pergunta.",mic:"Ditar pergunta",prn:"edição impressa",v1:"O navegador ou este ambiente bloqueia o microfone. Você pode usar o ditado do teclado do celular.",v2:"Não ouvi você. Tente novamente.",v3:"Não encontrei um microfone disponível.",v4:"Não consegui ler em voz alta neste navegador.",spk:"Ler respostas em voz alta",
+prod:{h:["Helena","Cuenvela · Terceiro lugar, I Certame Internacional Literário de Cuenvelas","Oito contos independentes sobre a vida de Helena, que se leem como uma novela curta. Aprofunda o comportamento, a idiossincrasia e os maus-tratos sofridos por mulheres de classe baixa no Caribe colombiano. Aborda pobreza, maus-tratos e violência; recomendado para adultos."],
+m:["Miércoles","Cuenvela · Primeiro Prêmio, II Certame Internacional Literário de Cuenvela (Ediciones Yunque, San Juan, Porto Rico, 11 de janeiro de 2023)","Oito contos sobre a vida de Marucha, sobre como as tragédias podem nos prender em um dia. Aborda violência armada e maus-tratos; recomendado para adultos. Pré-venda: o livro ainda não foi editado."],
+q:["QualiTrans IA","App · Licença anual","Para pesquisa qualitativa, pesquisa social e trabalho profissional. Primeira licença anual: 148 EUR (rampa 10→12→15 €/mês); renovação 180 EUR/ano."],
+c:["Comida Sana Doña Helena","App · Em breve","Alimentação familiar, economia doméstica, cozinha e empreendedorismo gastronômico. Lista de espera em preparação."]},
+svc:["Consultório psicológico","Histórias de vida","Assessorias pedagógicas","Pesquisa qualitativa","Pesquisa de mercado","Planos de negócio","Gestão de projetos"]}};
+const FR={h:"Helena · «Mientras la muerte llega»\n\nHelena reclamaba la muerte en cada momento de lucidez: «¡¿Todavía no me he muerto!?» decía, y cerraba los ojos esperando dormirse para siempre, pero la vida seguía manteniéndola en espera. Odiaba esperar. Era parte de su carácter, desesperaba porque todo debía hacerse rápido, como si necesitara el tiempo para algo más, pero no era así. Ella, que había trabajado tanto desde que era niña, no quería aceptar que debía descansar, odiaba ese cuerpo viejo que la hacía lenta y que alertó a todos de que era el momento de hacerla descansar. Hacer algo le daba licencia para seguir soñando, pero ¿en qué? De muy joven se hizo adicta al cigarro luego de quedar huérfana. No tenía a nadie con quien hablar, a pesar de tener mucha gente a su lado.",
+m:"Miércoles · I. «La nevera»\n\nLa noche cuando empezaste a matarnos, no sabíamos quién dirigía la operación que nos encerró a todos en un miércoles y desterró para siempre el resto de los días de la semana. Desde entonces, todos los muertos y, los vivos “que tenemos muerta el alma”, estamos aquí sin poder salir de este interludio de pesadilla.\n\nLos últimos minutos vespertinos del martes anterior se descompusieron en abrumadoras sordinas, donde debimos sospechar que algo turbulento vendría con las primeras horas del día miércoles. «¡Supersticiones, no crean en agüeros! ¡Nada malo va a pasar!», dijeron algunos viejos, cuando preguntamos por el silencio de los pájaros, de los perros, de los grillos y del mismo viento. Se equivocaron. Nadie contaba con tu arremetida."};
+// Catálogo: precios base en EUR. Las tasas COP/USD se configuran aquí cuando existan (no se inventan).
+const P=[{id:"h",kind:"book",eur:10,phys:15,fr:1,isbn:"978-958-49-6347-5"},{id:"m",kind:"book",eur:20,pre:1,fr:1},{id:"q",kind:"app"},{id:"c",kind:"app"}];
+let L="es",cart=[];
+try{const s=localStorage.getItem("pl_lang");if(s&&T[s])L=s;else{const n=(navigator.language||"es").slice(0,2);if(T[n])L=n}cart=JSON.parse(localStorage.getItem("pl_cart")||"[]")}catch(e){}
+cart=Array.isArray(cart)?[...new Set(cart.filter(id=>["h","m"].includes(id)))]:[];
+const $=i=>document.getElementById(i),t=()=>T[L];
+const save=()=>{try{localStorage.setItem("pl_lang",L);localStorage.setItem("pl_cart",JSON.stringify(cart))}catch(e){}};
+const eur=n=>n.toLocaleString(L,{style:"currency",currency:"EUR"});
+function render(){const x=t();document.documentElement.lang=L;
+$("nav").innerHTML=["#libros","#servicios","#n1","#contacto"].map((h,i)=>`<a href="${h}">${x.nav[i]}</a>`).join("");
+$("sub").textContent=x.sub;$("c1").textContent=x.c1;$("c2").textContent=x.c2;$("c3").textContent=x.c3;$("h-lib").textContent=x.hl;$("h-srv").textContent=x.hs;
+$("n1").textContent=x.n1;$("n2").textContent=x.n2;$("foot").textContent=x.foot;$("h-ct").textContent=x.ct;$("cts").textContent=x.cts;$("l-cn").textContent=x.cn;$("l-ce").textContent=x.ce;$("l-cm").textContent=x.cm;$("l-cc").textContent=x.cc;$("cw").textContent=x.cw;$("cb").textContent=x.cb;$("astb").textContent=x.ast;$("send").textContent=x.send;$("inp").placeholder=x.ph;
+document.querySelectorAll("[data-l]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===L));
+$("pc").setAttribute("aria-label",x.close);$("mic").title=$("mic").ariaLabel=x.mic;$("spk").title=$("spk").ariaLabel=x.spk;$("cartb").textContent=`${x.cart} (${cart.length})`;
+$("prods").innerHTML=P.map(p=>{const d=x.prod[p.id];let pr="",bt="";
+if(p.kind==="book"){pr=`<div class="price">${x.fmt}: ${eur(p.eur)}</div><div class="mut">${p.id==="h"?x.phys2+" · "+eur(p.phys):x.phys+": "+x.tbd}</div>${p.pre?`<div class="mut">${x.eta}</div><div class="mut">${x.dl}</div>`:""}${p.isbn?`<div class="mut">ISBN ${p.isbn} (${x.prn})</div>`:""}`;bt=`<button data-add="${p.id}">${p.pre?x.pre:x.buy}</button><button class="alt" data-fr="${p.id}">${x.frag}</button>`}
+else if(p.id==="q"){pr=`<div class="price">${x.lic}</div>`;bt=`<button data-tc>${x.buyq}</button><button class="alt" data-ask="${p.id}">${x.ask}</button>`}
+else{bt=`<button class="alt" data-ask="${p.id}">${x.ask}</button>`}
+return `<article class="card"><span class="badge ${p.pre?"pre":""}">${p.pre?x.pb:d[1].split(" · ")[0]}</span><h3>${d[0]}</h3><div class="mut">${d[1]}</div>${p.kind==="book"?`<div class="mut">${x.by}: Carlos Arias Villegas</div>`:""}<p>${d[2]}</p>${pr}<div class="row">${bt}</div></article>`}).join("");
+$("srv").innerHTML=x.svc.map(s=>`<article class="card"><h3>${s}</h3><div class="row"><button class="alt" data-ask="${s}">${x.ask}</button></div></article>`).join("");
+save()}
+function showCart(){const x=t(),d=$("dlg");let tot=0;
+const rows=cart.map((id,i)=>{const p=P.find(q=>q.id===id);tot+=p.eur;return `<div class="row" style="justify-content:space-between"><span>${x.prod[id][0]} · ${x.fmt}</span><span>${eur(p.eur)} <button class="alt sm" data-rm="${i}">✕</button></span></div>`}).join("");
+d.innerHTML=`<h2>${x.cart}</h2>${rows||`<p>${x.empty}</p>`}<p class="price">${x.total}: ${eur(tot)}</p><h3>${x.paym}</h3><p class="mut">${x.pp}<br>${x.nq}</p><p class="mut">${x.paypend}</p><div class="row"><button data-cord>${x.cord}</button><button class="alt" data-close>${x.close}</button></div>`;d.showModal()}
+function showTC(){const x=t(),d=$("dlg");
+d.innerHTML=`<h3>${x.tct}</h3><p class="mut">${x.tc0}</p>
+<label class="tc-item"><input type="checkbox" class="tc">${x.tc1}</label>
+<label class="tc-item"><input type="checkbox" class="tc">${x.tc2}</label>
+<label class="tc-item"><input type="checkbox" class="tc">${x.tc3}</label>
+<label class="tc-item"><input type="checkbox" class="tc">${x.tc4}</label>
+<label class="tc-item"><input type="checkbox" class="tco">${x.tco1}</label>
+<label class="tc-item"><input type="checkbox" class="tco">${x.tco2}</label>
+<p class="mut" id="tcmsg"></p><div class="row"><button data-tcsend>${x.tcsend}</button><button class="alt" data-close>${x.close}</button></div>`;d.showModal()}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+if(b.dataset.l){L=b.dataset.l;render()}
+else if(b.dataset.add){if(!cart.includes(b.dataset.add))cart.push(b.dataset.add);render();showCart()}
+else if(b.dataset.fr){const d=$("dlg");d.innerHTML=`<p class="frag"></p><div class="row"><button class="alt" data-close>${t().close}</button></div>`;d.querySelector(".frag").textContent=FR[b.dataset.fr];d.showModal()}
+else if(b.dataset.rm){cart.splice(+b.dataset.rm,1);render();showCart()}
+else if("close" in b.dataset)$("dlg").close();
+else if("tc" in b.dataset)showTC();
+else if("tcsend" in b.dataset){const x=t(),d=$("dlg"),req=[...d.querySelectorAll(".tc")],opt=[...d.querySelectorAll(".tco")];
+if(req.some(c=>!c.checked)){$("tcmsg").textContent=x.tcreq;return}
+const body=["Solicitud de licencia QualiTrans IA — Polivalencias Latam","Idioma: "+L,"Fecha: "+new Date().toISOString(),"",
+"[Obligatorio] Términos y Condiciones y Política de Privacidad: ACEPTADO","[Obligatorio] Pacto Arbitral (Cámara de Comercio de Montería): ACEPTADO","[Obligatorio] Mayoría de edad / autorización: CONFIRMADO","[Obligatorio] Responsabilidad por mis propios datos: CONFIRMADO","",
+"[Opt-in] Sugerencias y notificaciones de mejora: "+(opt[0]&&opt[0].checked?"SÍ":"NO"),"[Opt-in, Ley 1581] Datos para futuros productos Polivalencias Latam: "+(opt[1]&&opt[1].checked?"SÍ":"NO"),"",
+"Precio: 148 EUR primer año (rampa 10/12/15 € por mes); renovación 180 EUR/año.","Siguiente paso: coordinar pago y entrega de la clave de licencia."].join("\n");
+location.href="mailto:czqualitrans@gmail.com?subject="+encodeURIComponent("Solicitud licencia QualiTrans IA — aceptación T&C v1.1")+"&body="+encodeURIComponent(body);$("tcmsg").textContent=x.tcok}
+else if(b.dataset.cord){const x=t();if(!cart.length){showCart();return}
+const body=["Pedido — Polivalencias Latam","Idioma: "+L,"Fecha: "+new Date().toISOString(),"","Productos:",...cart.map(id=>"- "+x.prod[id][0]+" · "+x.fmt+" · "+eur(P.find(q=>q.id===id).eur)),"","Método de pago preferido: (indicar: PayPal / Nequi / Bre-B)","Nombre y correo del comprador:"].join("\n");
+location.href="mailto:polivalenciaslatam@proton.me?subject="+encodeURIComponent("Pedido Polivalencias Latam")+"&body="+encodeURIComponent(body)}
+else if(b.dataset.ask){openAst();ask(t().prod[b.dataset.ask]?t().prod[b.dataset.ask][0]:b.dataset.ask)}
+else if(b.id==="cartb")showCart();
+else if(b.id==="zoom"){const on=document.documentElement.classList.toggle("big");b.setAttribute("aria-pressed",on)}
+else if(b.id==="pc"||(b.id==="astb"&&$("panel").classList.contains("open"))){$("panel").classList.remove("open");stopSay()}
+else if(b.id==="c3"||b.id==="astb")openAst()});
+// Asistente: "El Anfitrión del Umbral" (orquestador) — Worker Cloudflare polivalencias-assistant (Gemini, capa gratuita)
+const AIU="https://polivalencias-assistant.czqualitrans.workers.dev";
+let hist=[],opened=false,busy=false;
+const SYS=`Eres El Anfitrión del Umbral, asistente de IA de Polivalencias Latam (marca de Carlos Arias Villegas). Responde breve, cálido y claro, en el idioma del usuario. Catálogo: Helena (cuenvela, 10 EUR digital, 15 EUR físico en Colombia, físico próximamente, aún no se vende); Miércoles (cuenvela premiada, PREVENTA, 20 EUR digital; aún no editado; entrega estimada el 12 de abril de 2027, podría adelantarse; no es garantía; fecha límite de preventa 12 de abril de 2027, podría cerrar antes); QualiTrans IA (app de investigación cualitativa, licencia anual: 148 EUR el primer año —10 €/mes meses 1-4, 12 €/mes 5-8, 15 €/mes desde 9—; renovación 180 EUR/año; pago por PayPal —paypal.me/czqualitrans— o Nequi/Bre-B coordinado por correo; no confirmes pagos mensuales ni descuentos); Comida Sana Doña Helena (app, próximamente). Servicios (tarifa base 200.000 COP por hora: menciónala SOLO si el usuario pregunta por precios o tarifas, y aclara que la cotización final la confirma Carlos): consultorio psicológico, historias de vida, asesorías pedagógicas, investigación cualitativa y de mercados, planes de negocio, gestión de proyectos. Consultorio: presencial solo en Montelíbano, Córdoba; remoto desde cualquier lugar. Reglas: eres una IA; no inventes precios, fechas ni garantías; no des descuentos; no des diagnósticos, consejos clínicos ni de medicación; en Historias de vida no recibas relatos antes del contrato; no hables mal de nadie. Si algo no está aquí, di que lo confirmará Carlos y ofrece tomar correo o WhatsApp. Si detectas riesgo de daño o peligro, responde con calma, invita a contactar de inmediato a emergencias (en Colombia, línea 123) y a una persona de confianza, y no sigas con temas comerciales.`;
+function msg(c,txt){const m=document.createElement("div");m.className="m "+c;m.textContent=txt;$("msgs").appendChild(m);$("msgs").scrollTop=1e9;return m}
+function openAst(){$("panel").classList.add("open");if(!opened){opened=true;msg("a",t().greet)}$("inp").focus()}
+async function ask(q){if(!q||busy)return;stopSay();msg("u",q);hist.push({role:"user",content:q});
+busy=true;const m=msg("a","…");
+try{const r=await fetch(AIU,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:SYS,messages:hist})});
+if(!r.ok)throw new Error("http "+r.status);
+const j=await r.json().catch(()=>null);const txt=(j&&(j.text||j.reply))||(await r.text());
+if(!txt)throw new Error("empty");m.textContent=txt;hist.push({role:"assistant",content:txt});say(txt)}
+catch(e){m.textContent=t().noai}busy=false;$("msgs").scrollTop=1e9}
+$("f").addEventListener("submit",e=>{e.preventDefault();const v=$("inp").value.trim();$("inp").value="";ask(v)});
+// Voz (nivel 1): dictado y lectura con las funciones del navegador
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition,LC={es:"es-CO",en:"en-US",pt:"pt-BR"},SS=window.speechSynthesis;let speak=false,rec=null;
+function stopSay(){try{SS&&SS.cancel()}catch(e){}}
+function say(tx){if(!speak||!SS)return;try{stopSay();const u=new SpeechSynthesisUtterance(tx);u.lang=LC[L];u.onerror=e=>{if(e.error!=="canceled"&&e.error!=="interrupted")msg("a",t().v4+" ["+e.error+"]")};SS.speak(u)}catch(e){}}
+if(SR)$("mic").hidden=false;if(SS)$("spk").hidden=false;
+$("spk").onclick=()=>{speak=!speak;$("spk").setAttribute("aria-pressed",speak);if(!speak)stopSay()};
+$("mic").onclick=()=>{if(rec){rec.stop();return}try{rec=new SR();rec.lang=LC[L];rec.interimResults=false;
+rec.onresult=e=>{const v=e.results[0][0].transcript;$("inp").value="";ask(v)};
+rec.onend=()=>{rec=null;$("mic").setAttribute("aria-pressed","false")};
+rec.onerror=e=>{const k={"not-allowed":"v1","service-not-allowed":"v1","no-speech":"v2","audio-capture":"v3"}[e.error];msg("a",(k?t()[k]:t().novoice)+" ["+e.error+"]")};
+$("mic").setAttribute("aria-pressed","true");rec.start()}catch(e){rec=null;msg("a",t().novoice)}};
+$("cf").addEventListener("submit",e=>{e.preventDefault();const n=$("cn").value.trim(),m=$("cm").value.trim(),c=$("ce").value.trim();location.href="mailto:polivalenciaslatam@proton.me?subject="+encodeURIComponent("Contacto web: "+n)+"&body="+encodeURIComponent(m+"\n\n"+n+" <"+c+">")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("panel").classList.remove("open")});
+render();
+</script>
+</body>
+</html>
