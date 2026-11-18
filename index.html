@@ -215,7 +215,7 @@ function msg(c,txt){const m=document.createElement("div");m.className="m "+c;m.t
 function openAst(){$("panel").classList.add("open");if(!opened){opened=true;msg("a",t().greet)}$("inp").focus()}
 async function ask(q){if(!q||busy)return;stopSay();msg("u",q);hist.push({role:"user",content:q});
 busy=true;const m=msg("a","…");
-try{const r=await fetch(AIU,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:SYS,messages:hist})});
+try{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),25000);const r=await fetch(AIU,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:SYS,messages:hist}),signal:ctl.signal});clearTimeout(to);
 if(!r.ok)throw new Error("http "+r.status);
 const j=await r.json().catch(()=>null);const txt=(j&&(j.text||j.reply))||(await r.text());
 if(!txt)throw new Error("empty");m.textContent=txt;hist.push({role:"assistant",content:txt});say(txt)}
